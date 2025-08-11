@@ -14,7 +14,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search"
     />
-    <title>Movie Search</title>
+    <title>Movie Search - Find Your Next Film</title>
   </head>
   <body>
     <header>
@@ -26,7 +26,7 @@
         <form id="search-form">
           <div class="search">
             <span class="material-symbols-outlined search-icon"> search </span>
-
+            <label for="search-input" class="sr-only">Search for movies</label>
             <input
               type="search"
               name="search-input"
@@ -41,31 +41,7 @@
     </header>
     <main>
       <div class="wrapper">
-        <div id="movie-list">
-          <!-- <div class="movie-card">
-            <img
-              src="https://m.media-amazon.com/images/M/MV5BZGRiMDE1NTMtMThmZS00YjE4LWI1ODQtNjRkZGZlOTg2MGE1XkEyXkFqcGc@._V1_SX300.jpg"
-              alt=""
-              class="movie-poster"
-            />
-            <div class="movie-data">
-              <div class="movie-title">
-                <h2 class="movie-title">The Fast and the Furious</h2>
-                <p class="movie-rating">6.8</p>
-              </div>
-              <div class="movie-metadata">
-                <p class="movie-runtime">106 min</p>
-                <p class="movie-genre">Action, Crime, Thriller</p>
-                <button class="add-to-watchlist-btn">Watchlist</button>
-              </div>
-              <p class="movie-plot">
-                Los Angeles police officer Brian O'Conner must decide where his
-                loyalty really lies when he becomes enamored with the street
-                racing world he has been sent undercover to end it.
-              </p>
-            </div>
-          </div> -->
-        </div>
+        <div id="movie-list"></div>
       </div>
     </main>
     <script src="./js/index.js" type="module"></script>

@@ -5,6 +5,22 @@
     font-family: 'Inter', sans-serif;
 }
 
+html {
+    overflow-y: scroll;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 /* Utility Classes */
 .wrapper {
     max-width: 1200px;
@@ -131,7 +147,9 @@ h1 {
 
 /* Movie List */
 #movie-list {
-    padding: 0 300px 60px;
+    padding: 0 2rem 60px;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .movie-card {
@@ -153,9 +171,15 @@ h1 {
     margin-bottom: .5em;
 }
 
+.movie-title-rating img {
+    height: 18px;
+    margin-right: 2px;
+}
+
 .movie-title {
     font-weight: 500;
     font-size: 1.25rem; 
+    margin-right: 8px;
 }
 
 .movie-metadata {
@@ -167,13 +191,33 @@ h1 {
 }
 
 .add-to-watchlist-btn {
-    padding: 2px 4px;
+    padding: 4px 6px;
+    font-size: .75rem;
     border: none;
     background: none;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.add-to-watchlist-btn img {
+    height: 18px;
+}
+
+.add-to-watchlist-btn:hover {
+    border-radius: 6px;
+    background: #E0E0E0;
+    cursor: pointer;
 }
 
 .movie-plot {
     color: #6B7280;
+}
+
+@media (max-width: 768px) {
+    #movie-list {
+        padding: 0 1rem 60px;
+    }
 }
 
 
