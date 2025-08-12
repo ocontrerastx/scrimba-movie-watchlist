@@ -59,6 +59,7 @@ header::before {
 }
 
 .top-section {
+    position: relative;
     padding: 80px 40px;
     display: flex;
     justify-content: space-between;
@@ -90,9 +91,8 @@ h1 {
     transform: translateX(-50%);
     border: 1px solid #E0E0E0;
     border-radius: 6px;
-    width: calc(100% - 80px);
+    width: calc(100vw - 80px);
     max-width: 550px;
-    margin: 0 auto;
     background: #FFFFFF;
     z-index: 3;
 }
@@ -220,4 +220,56 @@ h1 {
     }
 }
 
+@media (max-width: 484px) { 
+    header {
+        margin-bottom: 2em;
+    }
 
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .nav-link {
+        font-size: .8rem;
+    }
+
+    #search-form {
+        width: calc(100vw - 32px);
+        bottom: -35px;
+    }
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    margin-top: 200px;
+    color: #DFDDDD;
+}
+.empty-state img {
+    vertical-align: middle;
+}
+
+.add-movies {
+    margin-top: 1em;
+    color: #000000;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+}
+
+.add-movies a {
+    padding: .5em;
+    text-decoration: none;
+}
+
+.add-movies a:visited {
+    color: #000000;
+}
+
+.add-movies a:hover {
+    cursor: pointer;
+    border-radius: 6px;
+    background: #E0E0E0;
+}

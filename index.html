@@ -22,26 +22,38 @@
         <div class="top-section">
           <h1>Find your film</h1>
           <a href="watchlist.html" class="nav-link">My Watchlist</a>
-        </div>
-        <form id="search-form">
-          <div class="search">
-            <span class="material-symbols-outlined search-icon"> search </span>
-            <label for="search-input" class="sr-only">Search for movies</label>
-            <input
-              type="search"
-              name="search-input"
-              id="search-input"
-              placeholder="Search for a movie"
-            />
+          <form id="search-form">
+            <div class="search">
+              <span class="material-symbols-outlined search-icon">
+                search
+              </span>
+              <label for="search-input" class="sr-only"
+                >Search for movies</label
+              >
+              <input
+                type="search"
+                name="search-input"
+                id="search-input"
+                placeholder="Search for a movie"
+              />
 
-            <button class="search-button">Search</button>
-          </div>
-        </form>
+              <button class="search-button">Search</button>
+            </div>
+          </form>
+        </div>
       </div>
     </header>
     <main>
       <div class="wrapper">
-        <div id="movie-list"></div>
+        <div id="movie-list">
+          <div class="empty-state">
+            <img
+              src="./assets/movie-icon.png"
+              alt="Icon displaying a filmstrip"
+            />
+            <h2>Start exploring</h2>
+          </div>
+        </div>
       </div>
     </main>
     <script src="./js/index.js" type="module"></script>

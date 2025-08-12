@@ -3,7 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Movie Watchlist</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>My Movie Watchlist</title>
   </head>
-  <body></body>
+  <body>
+    <header>
+      <div class="wrapper">
+        <div class="top-section">
+          <h1>My Watchlist</h1>
+          <a href="index.html" class="nav-link">Search for movies</a>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="wrapper">
+        <div id="movie-list">
+          <div class="empty-state">
+            <h2>Your watchlist is looking a little empty...</h2>
+            <div class="add-movies">
+              <a href="index.html"
+                ><img src="./assets/add_circle.svg" /> Let's add some movies!</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="./js/watchlist.js" type="module"></script>
+  </body>
 </html>
