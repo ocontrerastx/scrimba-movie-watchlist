@@ -1,11 +1,12 @@
-export function getMovieListHTML(moviesArray) {
+export function getMovieListHTML(moviesArray, watchlistArray = []) {
     let moviesListHTML = ``
     let buttonText = ``
     let iconLocation = ``
 
     moviesArray.forEach(movie => {
 
-        if (movie.inWatchlist) {
+        const inWatchlist = isMovieInWatchlist(movie.imdbId, watchlistArray)
+        if (inWatchlist) {
             buttonText = `Remove`
             iconLocation = `./assets/remove_circle.svg`
         } else {
@@ -42,4 +43,19 @@ export function getMovieListHTML(moviesArray) {
         `
     }) 
     return moviesListHTML
+}
+
+export function isMovieInWatchlist(movieId, watchlistArray) {
+    return watchlistArray.some(movie => movie.imdbId === movieId)
+}
+
+export function removeFromWatchlist(movieId, watchlistArray) {
+    const indexOfMovieToRemove = watchlistArray.findIndex(movie => movie.imdbId === movieId)
+    watchlistArray.splice(indexOfMovieToRemove, 1)
+    // Update local storage with the latest movieWatchlist Array
+    localStorage.setItem('movieWatchlist', JSON.stringify(watchlistArray))
+}
+
+export function renderMovieList (divToRender, movieArray, watchlistArray) {
+    divToRender.innerHTML = getMovieListHTML(movieArray, watchlistArray)
 }
