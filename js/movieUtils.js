@@ -1,5 +1,19 @@
 export function getMovieListHTML(moviesArray) {
-    let moviesListHTML = moviesArray.map(movie => `
+    let moviesListHTML = ``
+    let buttonText = ``
+    let iconLocation = ``
+
+    moviesArray.forEach(movie => {
+
+        if (movie.inWatchlist) {
+            buttonText = `Remove`
+            iconLocation = `./assets/remove_circle.svg`
+        } else {
+            buttonText = `Watchlist`
+            iconLocation = `./assets/add_circle.svg`
+        }
+
+        moviesListHTML += `
         <div class="movie-card">
         <img
             src="${movie.poster}"
@@ -16,8 +30,8 @@ export function getMovieListHTML(moviesArray) {
             <p class="movie-runtime">${movie.runtime}</p>
             <p class="movie-genre">${movie.genre}</p>
             <button class="add-to-watchlist-btn" data-movie-id="${movie.imdbId}">
-                <img src="./assets/add_circle.svg" /> 
-                Watchlist
+                <img src="${iconLocation}" /> 
+                ${buttonText}
             </button>
             </div>
             <p class="movie-plot">
@@ -25,7 +39,7 @@ export function getMovieListHTML(moviesArray) {
             </p>
         </div>
         </div>
-        `).join('')
-    
+        `
+    }) 
     return moviesListHTML
 }

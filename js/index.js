@@ -7,11 +7,11 @@ const omdbKey = CONFIG.API_KEY
 const searchForm = document.getElementById('search-form')
 const movieListDiv = document.getElementById('movie-list')
 
-// Movie Medadata & Watchlist Arrays
+// Movie Medadata
 let movieMetadata
 
-let movieWatchlist
 // Attempt to retrieve watchlist from local storage
+let movieWatchlist
 const storedWatchlist = localStorage.getItem('movieWatchlist')
 // If user has an existing watchlist then parse existing, if not then declare a new empty watchlist
 storedWatchlist ? movieWatchlist = JSON.parse(storedWatchlist) : movieWatchlist = []
@@ -23,8 +23,13 @@ searchForm.addEventListener("submit", e => {
 })
 
 document.addEventListener("click", e => {
-    if(e.target.dataset.movieId){
-        addToWatchlist(e.target.dataset.movieId)
+    if(e.target.dataset.movieId){ 
+        // Check if movie is in watchlist, if it isn't then call Add function, if not call Remove function
+        if (!isMovieInWatchlist(e.target.dataset.movieId)) {
+            addToWatchlist(e.target.dataset.movieId)
+        } else {
+            removeFromWatchlist(e.target.dataset.movieId)
+        }
     }
 })
 
@@ -60,14 +65,28 @@ async function getMovieMetadata(movieIdsArray){
                 runtime: data.Runtime,
                 imdbId: data.imdbID,
                 imdbRating: data.imdbRating,
-                poster: data.Poster
+                poster: data.Poster,
+                inWatchlist: isMovieInWatchlist(data.imdbID)
             }
         movieMetadata.push(movieObject)
     }
 }
 
 function addToWatchlist(selectedMovieId) {
-    movieWatchlist.push(...movieMetadata.filter(movie => movie.imdbId === selectedMovieId))
-    console.log(movieWatchlist)
+    // Get the object of the movie the user is wanting to add to Watchlist
+    const movieToAddToWatchlist = movieMetadata.find(movie => movie.imdbId === selectedMovieId)     
+    // For the selected movie, flip the inWatchlist boolean    
+    movieToAddToWatchlist.inWatchlist = !movieToAddToWatchlist.inWatchlist
+    // Add the selected movie object into the movieWatchlist Array
+    movieWatchlist.push(movieToAddToWatchlist)
+    // Update local storage with the latest movieWatchlist Array
     localStorage.setItem('movieWatchlist', JSON.stringify(movieWatchlist))
+}
+
+function isMovieInWatchlist(movieId) {
+    return movieWatchlist.some(movie => movie.imdbId === movieId)
+}
+
+function removeFromWatchlist(movieId) {
+    console.log(`removing: ${movieId}`)
 }
