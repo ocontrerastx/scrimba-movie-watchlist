@@ -1,5 +1,5 @@
 import { CONFIG } from "./config.js"
-import { isMovieInWatchlist, removeFromWatchlist, renderMovieList } from "./movieUtils.js"
+import { getMovieListHTML, isMovieInWatchlist, removeFromWatchlist, renderMovieList } from "./movieUtils.js"
 
 // OMBD API Key
 const omdbKey = CONFIG.API_KEY
@@ -10,12 +10,26 @@ const movieListDiv = document.getElementById('movie-list')
 // Movie Medadata
 let movieMetadata
 
-// Attempt to retrieve watchlist from local storage
-let movieWatchlist
-const storedWatchlist = localStorage.getItem('movieWatchlist')
-// If user has an existing watchlist then parse existing, if not then declare a new empty watchlist
-storedWatchlist ? movieWatchlist = JSON.parse(storedWatchlist) : movieWatchlist = []
+// Load watchlist from localStorage with error handling
+let movieWatchlist = loadWatchlist()
 
+function loadWatchlist() {
+    try {
+        const storedWatchlist = localStorage.getItem('movieWatchlist')
+        return storedWatchlist ? JSON.parse(storedWatchlist) : []
+    } catch (error) {
+        console.error('Error loading watchlist:', error)
+        return []
+    }
+}
+
+function saveWatchlist() {
+    try {
+        localStorage.setItem('movieWatchlist', JSON.stringify(movieWatchlist))
+    } catch (error) {
+        console.error('Error saving watchlist:', error)
+    }
+}
 
 searchForm.addEventListener("submit", e => {
     e.preventDefault()
@@ -24,18 +38,21 @@ searchForm.addEventListener("submit", e => {
 
 document.addEventListener("click", e => {
     if(e.target.dataset.movieId){ 
+        const movieId = e.target.dataset.movieId
         // Check if movie is in watchlist, if it isn't then call Add function, if not call Remove function
-        if (!isMovieInWatchlist(e.target.dataset.movieId, movieWatchlist)) {
-            addToWatchlist(e.target.dataset.movieId)            
+        if (!isMovieInWatchlist(movieId, movieWatchlist)) {
+            addToWatchlist(movieId)            
         } else {
-            removeFromWatchlist(e.target.dataset.movieId, movieWatchlist)
+            removeFromWatchlist(movieId, movieWatchlist)
         }
+
+        saveWatchlist()
         renderMovieList(movieListDiv, movieMetadata, movieWatchlist)
     }
 })
 
 async function handleMovieSearchClick() {
-    // Make sure movieMetadata is empty before adding results
+    // Clear previous results
     movieMetadata = []
     // Call OMBD API to get Movie IDs
     const searchInputValue = document.getElementById('search-input').value
@@ -73,9 +90,10 @@ async function getMovieMetadata(movieIdsArray){
 
 function addToWatchlist(selectedMovieId) {
     // Get the object of the movie the user is wanting to add to Watchlist
-    const movieToAddToWatchlist = movieMetadata.find(movie => movie.imdbId === selectedMovieId)     
-    // Add the selected movie object into the movieWatchlist Array
-    movieWatchlist.push(movieToAddToWatchlist)
-    // Update local storage with the latest movieWatchlist Array
-    localStorage.setItem('movieWatchlist', JSON.stringify(movieWatchlist))
+    const movieToAdd = movieMetadata.find(movie => movie.imdbId === selectedMovieId)     
+
+    // Add to watchlist if not already present (double-check)
+    if (!movieWatchlist.some(movie => movie.imdbId === selectedMovieId)) {
+        movieWatchlist.push(movieToAdd)
+    }
 }

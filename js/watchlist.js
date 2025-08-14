@@ -1,28 +1,43 @@
-import { isMovieInWatchlist, removeFromWatchlist, renderMovieList } from "./movieUtils.js"
+import { removeFromWatchlist, renderMovieList } from "./movieUtils.js"
 
 const movieListDiv = document.getElementById('movie-list')
-const myWatchListString = localStorage.getItem('movieWatchlist')
-let myWatchlist = JSON.parse(myWatchListString)
+let myWatchlist = loadWatchlist()
 
-if (myWatchlist.length === 0) {
-    renderEmptyState()
-} else {
-    renderMovieList(movieListDiv, myWatchlist, myWatchlist)
+function loadWatchlist() {
+    try {
+        const myWatchListString = localStorage.getItem('movieWatchlist')
+        return myWatchListString ? JSON.parse(myWatchListString) : []
+    } catch (error) {
+        console.error('Error loading watchlist:', error)
+        return []
+    }
 }
+
+function saveWatchlist() {
+    try {
+        localStorage.setItem('movieWatchlist', JSON.stringify(myWatchlist))
+    } catch (error) {
+        console.error('Error saving watchlist:', error)
+    }
+}
+
+function renderCurrentState() {
+    if (myWatchlist.length === 0) {
+        renderEmptyState()
+    } else {
+        renderMovieList(movieListDiv, myWatchlist, myWatchlist)
+    }
+}
+
+renderCurrentState()
 
 document.addEventListener("click", e => {
     if(e.target.dataset.movieId){ 
-        // Check if movie is in watchlist, if it isn't then call Add function, if not call Remove function
-        if (!isMovieInWatchlist(e.target.dataset.movieId, myWatchlist)) {
-            addToWatchlist(e.target.dataset.movieId)            
-        } else {
-            removeFromWatchlist(e.target.dataset.movieId, myWatchlist)
-        }
-        if (myWatchlist.length === 0) {
-            renderEmptyState()
-        } else {
-            renderMovieList(movieListDiv, myWatchlist, myWatchlist)
-        }
+        const movieId = e.target.dataset.movieId
+        // Remove movie from watchlist
+        removeFromWatchlist(movieId, myWatchlist)
+        saveWatchlist()
+        renderCurrentState()
     }
 })
 
