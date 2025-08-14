@@ -1,4 +1,4 @@
-import { getMovieListHTML, isMovieInWatchlist, removeFromWatchlist, renderMovieList } from "./movieUtils.js"
+import { isMovieInWatchlist, removeFromWatchlist, renderMovieList } from "./movieUtils.js"
 
 const movieListDiv = document.getElementById('movie-list')
 const myWatchListString = localStorage.getItem('movieWatchlist')

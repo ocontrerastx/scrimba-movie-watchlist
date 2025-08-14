@@ -20,6 +20,7 @@ export function getMovieListHTML(moviesArray, watchlistArray = []) {
             src="${movie.poster}"
             alt="${movie.title} movie poster"
             class="movie-poster"
+            onerror="this.src='https://placehold.co/100x148?text=N/A';"
         />
         <div class="movie-data">
             <div class="movie-title-rating">
